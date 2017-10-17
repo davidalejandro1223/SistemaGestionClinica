@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		{% load staticfiles %}
+		<!-- Required meta tags -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+		<link rel="stylesheet" href="{% static 'css/login.css' %}">
+	</head>
+	<body>
+		<section id="section-container">
+			<div class="container">
+				<div class="row justify-content-center">
+					<div class="col-12 col-md-6 col-login">
+						<h4>Sistema de gestión odontologica</h4><br>
+						<form method="POST">
+							{% csrf_token %}
+							<div class="form-group">
+								<label for="inputUsuario">Usuario:</label>
+								<input type="text" name="inputUsuario" id="inputUsuario" class="form-control" placeholder="Ingrese su usuario">
+							</div>
+							<div class="form-group">
+								<label for="inputContrasena">Contraseña</label>
+								<input type="text" name="inputContrasena" id="inputContrasena" class="form-control" placeholder="Ingrese la Contraseña:">
+							</div>
+							<button type="submit" class="btn btn-primary">Ingresar</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- Optional JavaScript -->
+		<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+		{% load staticfiles %}
+		<script src="{% static 'js/jquery-3.2.1.min.js'%}"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"></script>
+		<script src = "{% static 'js/bootstrap.min.js' %}"></script>
+	</body>
+</html>
