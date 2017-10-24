@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from django.shortcuts import render
+from django.shortcuts import render, redirect, loader
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.http.response import HttpResponse
+from django.contrib.auth.decorators import login_required
+
+# Create your views here.
 
 def autenticar(request):
     if request.method == 'POST':
@@ -13,10 +16,20 @@ def autenticar(request):
         user = authenticate(username=usuario, password=contrasena)
         if user is not None:
             login(request, user)
-            return HttpResponse('usuario logueado')
+            return redirect('inicio')
         else:
             return HttpResponse('usuario no existe')
 
     return render(request, 'login.html', {})
 
-# Create your views here.
+def desautenticar(request):
+    logout(request)
+    return redirect('autenticar')
+
+@login_required(login_url = '/')
+def inicio(request):
+    template = loader.get_template('inicio.html')
+    context = {
+        'active_inicio' : 'active',
+    }
+    return HttpResponse(template.render(context, request))

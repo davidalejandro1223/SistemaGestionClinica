@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block style_content %}
+	<link rel="stylesheet" type="text/css" href="{% static 'css/inicio.css' %}">
+{% endblock style_content %}
+
+{% block content %}
+	<section class="section-container">
+		<div class="container inicio-container">
+			<div class="row">
+				<div class="col-12 ">
+					<h2 class="text-center">Bienvenido {{user.first_name}} {{user.last_name}}, ¿que desea hacer?</h2>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="section-container">
+		<div class="container">
+			<div class="row">
+				
+			</div>
+		</div>
+	</section>
+{% endblock content %}
