@@ -1,3 +1,10 @@
+*{
+	font-size: 16px;
+}
 body{
 	background-color: #eee;
+}
+
+nav{
+	border-radius: 0 0 1em 1em;
 }
