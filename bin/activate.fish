@@ -36,7 +36,7 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV "/home/david/Documentos/6to Semestre/Pygroup/SistemaGestionOdontologica"
+set -gx VIRTUAL_ENV "/home/david1223/Documentos/GestionOdontologica"
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/bin" $PATH
