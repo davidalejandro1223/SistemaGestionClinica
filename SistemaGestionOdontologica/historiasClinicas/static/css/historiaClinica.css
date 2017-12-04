@@ -1,0 +1,14 @@
+#section-container{
+    margin: 1em 0;
+    
+}
+
+.fila{
+    padding: 1em 0;
+    background: white;
+    border-radius: 1em;
+}
+
+.col-info{
+    background: #F2F4F3;
+}

@@ -1,11 +1,77 @@
 {% extends 'base.html' %}
+{% load staticfiles %}
 
+
+{% block style_content %}
+    <link rel="stylesheet" href="{% static 'css/historiaClinica.css' %}">
+{% endblock style_content %}
+    
 
 {% block content %}
-    {{ paciente.primer_nombre }}
-    {{ cabecera.numero_historia }}
+    <section id="section-container">
+        <div class="container">
+            <div class="row fila">
+                <div class="col-12 column text-center">
+                    <h2>Historia Clinica #{{ cabecera.numero_historia }}</h2>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="section-container">
+        <div class="container">
+            <div class="row fila">
+                <div class="col-12 col-md-6 col-lg-4">
+                    <h5>Paciente:</h6>
+                    <p>{{ paciente.primer_nombre }} {{ paciente.segundo_nombre }} {{ paciente.primer_apellido }} {{ paciente.segundo_apellido }}</p>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <h5>Cedula:</h6>
+                    <p>{{ paciente.cedula }}</p>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <h5>Fecha de nacimiento: </h6>
+                    <p>{{ paciente.fecha_nacimiento }}</p>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <h5>Direccion: </h6>
+                    <p>{{ paciente.direccion }}</p>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <h5>Ciudad: </h6>
+                        <p>{{ paciente.ciudad }}</p>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <h5>Telefono: </h6>
+                        <p>{{ paciente.telefono }}</p>
+                </div>
+                <div class="col-12">
+                    <a href="" class="btn btn-outline-primary btn-block"> Ingresar nueva entrada </a>
+                </div>
+            </div>
+        </div>
+    </section>
     {% for actualizacion in actualizaciones %}
-        {{ actualizacion.motivo_consulta }}
+    <section id="section-container">
+        <div class="container">
+            <div class="row fila">
+                <div class="col-12 text-center">
+                    <h6>Fecha de la consulta: {{ actualizacion.fecha_actualizacion }}</h6>
+                </div>
+                <div class="col-12">
+                    <p class="mb-2">Motivo de la consulta: </p>
+                    <div class="col-info mb-4">
+                        <p>{{ actualizacion.motivo_consulta }}</p>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <p class="mb-2">Tratamiento y observaciones: </p>
+                    <div class="col-info mb-4">
+                        <p>{{ actualizacion.tratamiento }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
     {% endfor %}
 {% endblock content %}
     
