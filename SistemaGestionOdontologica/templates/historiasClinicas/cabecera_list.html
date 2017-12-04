@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block style_content %}
+    <link rel="stylesheet" href="{% static 'css/PacientesLista.css' %}">
+    <link rel="stylesheet" href="{% static 'css/PacienteRegistro.css' %}"> 
+{% endblock style_content %} 
+
+{% block content %}
+<section id="section-container">
+    <div class="container">
+        <div class="row fila">
+            <div class="col-12 text-center pt-3 pb-2">
+                <h2>Lista de historias clinicas</h2>
+            </div>
+        </div>
+        <div class="row fila">
+            <div class="col-12">
+                <div class="list-group">
+                    {% for cabecera in object_list%}
+                    <a href="{% url 'historias_clinicas:historia_paciente' pk=cabecera.numero_historia %}" class="list-group-item list-group-item-action flex-column">
+                        <div class="d-flex w-100 text-center">
+                            <h5 class="mb-1">Historia clinica #{{ cabecera.numero_historia }}</h5>
+                        </div>
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}

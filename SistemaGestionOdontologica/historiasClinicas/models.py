@@ -27,6 +27,10 @@ class Actualizacion(models.Model):
     def __str__(self):
         return str(self.id)
 
+    def get_absolute_url(self):
+        from django.core.urlresolvers import reverse
+        return reverse('historias_clinicas:historia_paciente', kwargs={'pk': self.cabecera.numero_historia})
+
 
 @receiver(post_save, sender=Paciente)
 def crearCabecera(sender, **kwargs):
