@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    {{ paciente.primer_nombre }}
+    {{ cabecera.numero_historia }}
+    {% for actualizacion in actualizaciones %}
+        {{ actualizacion.motivo_consulta }}
+    {% endfor %}
+{% endblock content %}
+    

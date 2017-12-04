@@ -43,7 +43,7 @@
                     <h6>{{ paciente.estado_civil}}</h6>
                 </div>
                 <div class="col-12 colDatos">
-                    <a href="" class="btn btn-outline-primary btn-block">Historia Clinica</a>
+                    <a href="{% url  'historias_clinicas:historia_paciente' pk=paciente.cedula%}" class="btn btn-outline-primary btn-block">Historia Clinica</a>
                 </div>
             </div>
         </div>

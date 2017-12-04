@@ -6,7 +6,7 @@ from django.contrib import admin
 # Register your models here.
 @admin.register(Actualizacion)
 class AdminActualizacion(admin.ModelAdmin):
-    list_display = ('id', 'fecha_actualizacion',)
+    list_display = ('id', 'fecha_actualizacion', 'cabecera',)
 
 @admin.register(Cabecera)
 class AdminCabecera(admin.ModelAdmin):
