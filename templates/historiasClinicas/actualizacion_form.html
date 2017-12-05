@@ -2,6 +2,11 @@
 {% load widget_tweaks %}
 {% load staticfiles %}
 
+{% block style_content %}
+    <link rel="stylesheet" href=" {% static 'css/PacienteRegistro.css' %}"> 
+{% endblock style_content %}
+
+
 {% block content %}
 <section id="section-container">
     <div class="container">

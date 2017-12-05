@@ -33,7 +33,7 @@
 								<a class="nav-link" href="{% url 'historias_clinicas:listar_historias' %}">Historias clinicas</a>
 							</li>
 							<li class="nav-item {{active_citas}}">
-								<a class="nav-link" href="#"> Citas </a>
+								<a class="nav-link" href="#" data-toggle="modal" data-target="#exampleModal"> Citas </a>
 							</li>
 						</ul>
 						<ul class="navbar-nav">
@@ -46,6 +46,21 @@
 						</ul>
 					</div>
 				</nav>
+			</div>
+			<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">Lo sentimos!</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<p>Esta seccion se encuentra todavia en desarrollo</p>
+						</div>
+					</div>
+				</div>
 			</div>
 		</header>
 		{% block content %}

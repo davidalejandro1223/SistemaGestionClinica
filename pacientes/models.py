@@ -17,7 +17,7 @@ class Paciente(models.Model):
     )
     cedula = models.CharField(primary_key=True, max_length=11)
     primer_nombre = models.CharField(max_length=15)
-    segundo_nombre = models.CharField(max_length=15)
+    segundo_nombre = models.CharField(max_length=15, blank=True)
     primer_apellido = models.CharField(max_length=15)
     segundo_apellido = models.CharField(max_length=15)
     direccion = models.CharField(max_length=100)
