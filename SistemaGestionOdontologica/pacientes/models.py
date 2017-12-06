@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from django.urls import reverse
 
 # Create your models here.
 
@@ -23,6 +24,11 @@ class Paciente(models.Model):
     ciudad = models.CharField(max_length=50)
     fecha_nacimiento = models.DateField()
     estado_civil = models.CharField(max_length=50, choices=estados_civiles)
+    telefono = models.CharField(max_length=10)
 
     def __str__(self):
         return self.cedula
+
+    def get_absolute_url(self):
+        return reverse('pacientes:detalle_paciente', kwargs={"pk": self.cedula})
+

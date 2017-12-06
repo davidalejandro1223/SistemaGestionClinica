@@ -1,0 +1,10 @@
+#section-container {
+    margin: 1em 0;
+}
+
+.column {
+    border-radius: 1em;
+    background: white;
+    padding-top: .5em;
+    padding-bottom: .5em;
+}

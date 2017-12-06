@@ -1,10 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+
+{% block style_content %}
+<link rel="stylesheet" href="{% static 'css/PacienteDetail.css' %}">
+<link rel="stylesheet" href="{% static 'css/PacienteRegistro.css' %}">
+{% endblock style_content %}
+
+
+
+{% block content %}
+    <section id="section-container">
+        <div class="container">
+            <div class="row fila">
+                <div class="col-12 column">
+                    <h3>Paciente:</h3>
+                    <h2>{{paciente.primer_nombre}} {{paciente.segundo_nombre}} {{paciente.primer_apellido}} {{paciente.segundo_apellido}}</h2><br>
+                    <h3>Cedula:</h3>
+                    <h2>{{ paciente.cedula }}</h2>
+                </div>
+            </div>
+            <div class="row fila ">
+                <div class="col-12 col-md-6 col-lg-4 colDatos">
+                    <h5>Ciudad:</h5>
+                    <h6>{{ paciente.ciudad }}</h6>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4 colDatos">
+                    <h5>direccion: </h5>
+                    <h6>{{ paciente.direccion }}</h6>
+                    
+                </div>
+                <div class="col-12 col-md-6 col-lg-4 colDatos">
+                    <h5>Telefono: </h5>
+                    <h6>{{ paciente.telefono }}</h6>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4 colDatos">
+                    <h5>Fecha de nacimiento: </h5>
+                    <h6>{{ paciente.fecha_nacimiento }}</h6>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4 colDatos">
+                    <h5>Estado civil:</h5>
+                    <h6>{{ paciente.estado_civil}}</h6>
+                </div>
+                <div class="col-12 colDatos">
+                    <a href="" class="btn btn-outline-primary btn-block">Historia Clinica</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock content %}

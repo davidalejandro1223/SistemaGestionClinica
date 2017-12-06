@@ -16,7 +16,7 @@ def autenticar(request):
         user = authenticate(username=usuario, password=contrasena)
         if user is not None:
             login(request, user)
-            return redirect('inicio')
+            return redirect('usuarios:inicio')
         else:
             return HttpResponse('usuario no existe')
 
@@ -24,7 +24,7 @@ def autenticar(request):
 
 def desautenticar(request):
     logout(request)
-    return redirect('autenticar')
+    return redirect('usuarios:autenticar')
 
 @login_required(login_url = '/')
 def inicio(request):

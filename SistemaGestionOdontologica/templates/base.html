@@ -17,17 +17,17 @@
 		<header id="header-container">
 			<div class="container-fluid">
 				<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-					<a class="navbar-brand" href="#">Sistema Gestion Odontologica</a>
+					<a class="navbar-brand" href="/inicio">Sistema Gestion Odontologica</a>
 					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 					</button>
 					<div class="collapse navbar-collapse justify-content-between" id="navbarNavDropdown">
 						<ul class="navbar-nav">
 							<li class="nav-item {{active_inicio}}">
-								<a class="nav-link" href="#">Inicio <span class="sr-only">(current)</span></a>
+								<a class="nav-link" href="/inicio">Inicio <span class="sr-only">(current)</span></a>
 							</li>
 							<li class="nav-item {{active_pacientes}}">
-								<a class="nav-link" href="#">Pacientes</a>
+								<a class="nav-link" href="{% url 'pacientes:listar_pacientes' %}">Pacientes</a>
 							</li>
 							<li class="nav-item {{active_historias}}">
 								<a class="nav-link" href="#">Historias clinicas</a>

@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+
+{% block style_content %}
+    <link rel="stylesheet" href="{% static 'css/PacientesLista.css' %}">
+    <link rel="stylesheet" href="{% static 'css/PacienteRegistro.css' %}">
+{% endblock style_content %}
+
+{% block content %}
+    <section id="section-container">
+        <div class="container">
+            <div class="row fila">
+                <div class="col-12 text-center pt-3 pb-2">
+                    <h2>Lista de Pacientes</h2>
+                </div>
+            </div>
+            <div class="row fila">
+                <div class="col-12">
+                    <div class="list-group">
+                        {% for paciente in  object_list%}
+                            <a href="{% url 'pacientes:detalle_paciente' pk=paciente.cedula %}" class="list-group-item list-group-item-action flex-column">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1">{{ paciente.primer_nombre }} {{ paciente.segundo_nombre }} {{ paciente.primer_apellido }} {{ paciente.segundo_apellido }}</h5>
+                                    <h5>cedula: {{ paciente.cedula }}</h5>
+                                </div>
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock content %}
+    
