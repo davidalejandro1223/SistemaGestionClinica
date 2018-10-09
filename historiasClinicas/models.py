@@ -26,8 +26,8 @@ class Actualizacion(models.Model):
     )
     
     fecha_actualizacion = models.DateField(auto_now=True)
-    #motivo_consulta = models.TextField(default=None)
-    #tratamiento = models.TextField(default=None)
+    motivo_consulta = models.TextField(default=None)
+    tratamiento = models.TextField(default=None)
     cabecera = models.ForeignKey(Cabecera)
     #Nuevos
     empresa=models.CharField(max_length=100, default='empresa')

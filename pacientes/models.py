@@ -20,8 +20,6 @@ class Paciente(models.Model):
         ('femenino', 'Femenino')
     )
     
-
-
     cedula = models.CharField(primary_key=True, max_length=11)
     primer_nombre = models.CharField(max_length=15)
     segundo_nombre = models.CharField(max_length=15, blank=True)
@@ -29,7 +27,7 @@ class Paciente(models.Model):
     segundo_apellido = models.CharField(max_length=15)
     direccion = models.CharField(max_length=100)
     ciudad = models.CharField(max_length=50)
-    #fecha_nacimiento = models.DateField()
+    fecha_nacimiento = models.DateField()
     estado_civil = models.CharField(max_length=50, choices=estados_civiles)
     telefono = models.CharField(max_length=10)
     
