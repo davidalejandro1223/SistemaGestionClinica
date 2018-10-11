@@ -32,7 +32,7 @@ class Paciente(models.Model):
     telefono = models.CharField(max_length=10)
     
     #Nuevos
-    edad=models.CharField(max_length=2, default='00')
+    #edad=models.CharField(max_length=2, default='00')
     sexo=models.CharField(max_length=15, choices=sexos, default='sexo')
     
     def __str__(self):
