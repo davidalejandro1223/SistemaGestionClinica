@@ -5,6 +5,7 @@ from django.db import models
 from pacientes.models import Paciente
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.utils import timezone
 
 # Create your models here.
 
@@ -167,5 +168,5 @@ def crearCabecera(sender, **kwargs):
     cabecera_usuario = Cabecera.objects.create(
         numero_historia=kwargs['instance'].cedula, paciente=kwargs['instance'])
     cabecera_usuario.save()
-    actualizacion = Actualizacion.objects.create(cabecera=cabecera_usuario)
+    actualizacion = Actualizacion.objects.create(cabecera=cabecera_usuario, fecha_dxco=timezone.now, fecha_at=timezone.now)
     actualizacion.save()
