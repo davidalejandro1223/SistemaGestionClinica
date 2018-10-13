@@ -20,19 +20,54 @@ class Cabecera(models.Model):
 class Actualizacion(models.Model):
 
     seleccion = (
-        ('Si','si'),
-        ('No','no')        
+        ('si','Si'),
+        ('no','No')        
     )
 
     tipo_examen = (
-        ('Pre-ingreso','preingreso'),
-        ('Periodico', 'periodico'),
-        ('Egreso', 'egreso'),
-        ('Cambio labor', 'cambio labor'),
-        ('Reincorporacion laboral', 'reincorporacion'),
-        ('Rev. Paraclinicos', 'rev paraclinicos'),
+        ('preingreso','Pre-ingreso'),
+        ('periodico','Periodico'),
+        ('egreso','Egreso'),
+        ('cambio labor','Cambio labor'),
+        ('reincorporacion','Reincorporacion laboral'),
+        ('rev paraclinicos','Rev. Paraclinicos'),
+    )
+
+    conceptos_valoracion_medica = (
+        ('apto sin patologia','Apto para desempeñar el cargo sin patologia aparente'),
+        ('apto con patologia','Apto para desempañar el cargo con patologia que no limita la labor'),
+        ('apto con restricciones','Apto con restricciones o adaptaciones para la labor'),
+        ('aplazado','Aplazado'),
+        ('apto alturas','Apto para labor el alturas'),
+        ('apto continuacion labor','Apto para continuar desempeñando su labor'),
+        ('examen de retiro','Examen de retiro'),
+    )
+
+    restr_laborales = (
+        ('no se encuentra','No se encuentra'),
+        ('transitorias','Transitorias'),
+        ('tiempo','Tiempo'),
+        ('permanentes','Permanentes'),
+    )
+
+    remitenicia = (
+        ('se remite EPS','Se remite a EPS'),
+        ('continuar manejor medico EPS','Continuar manejo medio por EPS'),
+        ('se remire ARL','Se remite a ARL'),
     )
     
+    opciones_sistema_epidemiologico_ocupacional = (
+        ('ergonomico','Ergonómico'),
+        ('Psicosocial','Psicosocial'),
+        ('auditivo','Autitivo'),
+        ('visual','Visual'),
+        ('respiratorio','Respitatorio'),
+        ('biologico','Biológico'),
+        ('quimico','Quimico'),
+        ('accidente trabajo','Accidente de trabajo'),
+        ('otro','Otro'),
+        ('ninguno','Ninguno'),
+    )
     fecha_actualizacion = models.DateField(auto_now=True)
     #motivo_consulta = models.TextField(default=None)
     #tratamiento = models.TextField(default=None)
@@ -73,41 +108,51 @@ class Actualizacion(models.Model):
     esfera_mental=models.CharField(max_length=500)
 
     #   Concepto de valoracion medica
-    apto_sin_pato=models.CharField(max_length=2)
-    apto_con_pato=models.CharField(max_length=2)
-    apto_con_restri=models.CharField(max_length=2)
-    aplazado=models.CharField(max_length=2)
-    apto_alturas=models.CharField(max_length=2)
-    apto_continuar_labor=models.CharField(max_length=2)
-    examen_retiro=models.CharField(max_length=2)
-    apto_alturas=models.CharField(max_length=2 )
+    concepto_valoracion = models.CharField(max_length=50, choices=conceptos_valoracion_medica)
+    #apto_sin_pato=models.CharField(max_length=2)
+    #apto_con_pato=models.CharField(max_length=2)
+    #apto_con_restri=models.CharField(max_length=2)
+    #aplazado=models.CharField(max_length=2)
+    #apto_alturas=models.CharField(max_length=2)
+    #apto_continuar_labor=models.CharField(max_length=2)
+    #examen_retiro=models.CharField(max_length=2)
+    #apto_alturas=models.CharField(max_length=2 )
     secuela_accidente_trabajo=models.CharField(max_length=2, choices=seleccion)
-    #fecha_at = models.DateField(default=None)
     enfermedad_profesional=models.CharField(max_length=2, choices=seleccion)
-    #fecha_dxco = models.DateField(default=None)
     efermedad_relTrabajo=models.CharField(max_length=2, choices=seleccion)
+    fecha_dxco = models.DateField()
+    fecha_at = models.DateField()
+
     #   Resultados de laboratorios
     resultados_laboratorio=models.CharField(max_length=5000)
+   
     #   Recomendaciones
     #Restricciones laborales
-    no_encuentra=models.CharField(max_length=2)
-    transitorias=models.CharField(max_length=2)
-    tiempo=models.CharField(max_length=10)
-    permanentes=models.CharField(max_length=2)
-    remite_eps=models.CharField(max_length=2)
-    continuar_eps=models.CharField(max_length=2)
-    remite_arl=models.CharField(max_length=2)
-    otras=models.CharField(max_length=500)
-    auditivo=models.CharField(max_length=2)
-    visual=models.CharField(max_length=2)
-    respiratorio=models.CharField(max_length=2)
-    biologico=models.CharField(max_length=2)
-    quimico=models.CharField(max_length=2)
-    ergonomico=models.CharField(max_length=2)
-    psicosocial=models.CharField(max_length=2)
-    accidente_trabajo=models.CharField(max_length=2)
-    otro=models.CharField(max_length=2)
-    ninguno=models.CharField(max_length=2)
+    restricciones_laborales = models.CharField(max_length=50, choices=restr_laborales)
+
+    #Recomendaciones trabajador
+    remite = models.CharField(max_length=50, choices=remitenicia)
+    #no_encuentra=models.CharField(max_length=2)
+    #transitorias=models.CharField(max_length=2)
+    #tiempo=models.CharField(max_length=10)
+    #permanentes=models.CharField(max_length=2)
+    #remite_eps=models.CharField(max_length=2)
+    #continuar_eps=models.CharField(max_length=2)
+    #remite_arl=models.CharField(max_length=2)
+
+    #recomendaciones empresa
+    otras=models.CharField(max_length=1000)
+    ingreso_sistema_epidemiologico_ocupacional = models.CharField(max_length=50, choices=opciones_sistema_epidemiologico_ocupacional)
+    #auditivo=models.CharField(max_length=2)
+    #visual=models.CharField(max_length=2)
+    #respiratorio=models.CharField(max_length=2)
+    #biologico=models.CharField(max_length=2)
+    #quimico=models.CharField(max_length=2)
+    #ergonomico=models.CharField(max_length=2)
+    #psicosocial=models.CharField(max_length=2)
+    #accidente_trabajo=models.CharField(max_length=2)
+    #otro=models.CharField(max_length=2)
+    #ninguno=models.CharField(max_length=2)
 
     def __str__(self):
         return str(self.id)
