@@ -14,6 +14,9 @@ class CrearPaciente(CreateView):
     model = Paciente
     fields = '__all__'
 
+    def imprimir(self):
+        print(self.request)
+
 
 class DetallePaciente(DetailView):
     model = Paciente
