@@ -6,6 +6,21 @@ from .models import Cabecera, Actualizacion
 from pacientes.models import Paciente
 from django.views.generic.list import ListView
 from django.views.generic import CreateView
+#Librerias para la generación del PDF
+import os
+import os.path
+from io import BytesIO
+import xlwt
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import A4
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.platypus import Paragraph, Table, TableStyle, Image
+from reportlab.lib.enums import TA_CENTER
+from reportlab.lib import colors
+from django.http import HttpResponse
+from reportlab.lib.utils import ImageReader
+
+
 
 # Create your views here.
 class ActualizacionCreateView(CreateView):
@@ -65,4 +80,30 @@ def historia_paciente(request, pk):
 class HistoriaClinicaListView(ListView):
     model = Cabecera
 
+def report(request, pk):
+    response = HttpResponse(content_type='applicatio/pdf')
+    response['content-Disposition'] = 'attachment; filename= historia.pdf'
+    buffer=BytesIO()
+    c = canvas.Canvas(buffer, pagesize=A4)
+    
+    #HEADER
+    c.setLineWidth(.3)
+    c.setFont('Helvetica', 14)
+    c.drawString(30,780, 'CONSULTORIOS MEDICOS HERMANOS RODRIGUEZ')
+    c.setFont('Helvetica', 11)
+    c.drawString(30,768, 'Consultorios ocupacionales y de medicina general.')
+    c.drawString(30,756, 'Calle 4 #4 -97  Facatativá (Cundinamarca).')
+    
+    logo=os.path.join(os.path.dirname(os.path.abspath(__file__)), './Imagenes/logo.png')
+    c.drawImage(logo,410,740,width=156, height=68)
 
+    c.setFont('Helvetica', 14)
+    c.drawString(168,705, 'HISTORIA CLINICA OCUPACIONAL')
+
+    c.save()
+    pdf=buffer.getvalue();
+    buffer.close()
+    response.write(pdf)
+    return response
+
+   
