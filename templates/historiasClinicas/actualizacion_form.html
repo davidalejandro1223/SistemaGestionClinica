@@ -3,7 +3,7 @@
 {% load staticfiles %}
 
 {% block style_content %}
-    <link rel="stylesheet" href=" {% static 'css/PacienteRegistro.css' %}"> 
+    <link rel="stylesheet" href=" {% static 'css/ActualizacionRegistro.css' %}"> 
 {% endblock style_content %}
 
 
@@ -11,7 +11,7 @@
 <section id="section-container">
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-12 col-md-8 col-lg-6 column">
+            <div class="col-12 col-md-8 col-lg-8 column">
                 <h2 class="text-center">Nueva entrada historia clinica</h2>
             </div>
         </div>
@@ -19,9 +19,35 @@
 <section id="section-container">
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-12 col-md-8 col-lg-6 column">
+            <div class="col-12 col-md-8 col-lg-8 column">
                 <form method="POST">
-                    {% csrf_token %} {% for hidden in form.hidden_fields%} {{hidden}} {% endfor %} {% for field in form.visible_fields %}
+                    {% csrf_token %} 
+                    {% for hidden in form.hidden_fields%} 
+                        {{hidden}} 
+                    {% endfor %} 
+                    
+                    {% for field in form.visible_fields %}
+                    {% if field.name == 'empresa'%}
+                    <h4 class="subtitulo">Identificacion</h4>
+                    {% endif %}
+                    {% if field.name == 'antecedentes_personales'%}
+                    <h4 class="subtitulo">Antecedentes</h4>
+                    {% endif %}
+                    {% if field.name == 'ta'%}
+                    <h4 class="subtitulo">Examen Físico</h4>
+                    {% endif %}
+                    {% if field.name == 'valoracion_medica'%}
+                    <h4 class="subtitulo">Valoracion Medica</h4>
+                    {% endif %}
+                    {% if field.name == 'resultados_laboratorio'%}
+                    <h4 class="subtitulo">Resultados de Laboratorio</h4>
+                    {% endif %}
+                    {% if field.name == 'restricciones_laborales'%}
+                    <h4 class="subtitulo">Recomendaciones para el trabajador</h4>
+                    {% endif %}
+                    {% if field.name == 'otras'%}
+                    <h4 class="subtitulo">Recomendaciones para la empresa</h4>
+                    {% endif %}
                     <div class="form-group">
                         <label for="{{field.id_for_label}}">{{field.label}}</label> {{ field|add_class:'form-control'}}
                     </div>
