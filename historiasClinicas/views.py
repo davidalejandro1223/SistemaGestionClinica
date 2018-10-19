@@ -81,6 +81,7 @@ class HistoriaClinicaListView(ListView):
     model = Cabecera
 
 def report(request, pk):
+    margenIzq=30;
     response = HttpResponse(content_type='applicatio/pdf')
     response['content-Disposition'] = 'attachment; filename= historia.pdf'
     buffer=BytesIO()
@@ -88,17 +89,38 @@ def report(request, pk):
     
     #HEADER
     c.setLineWidth(.3)
-    c.setFont('Helvetica', 14)
-    c.drawString(30,780, 'CONSULTORIOS MEDICOS HERMANOS RODRIGUEZ')
+    c.setFont('Helvetica-Bold', 14)
+    c.drawString(margenIzq,780, 'CONSULTORIOS MÉDICOS HERMANOS RODRÍGUEZ')
     c.setFont('Helvetica', 11)
-    c.drawString(30,768, 'Consultorios ocupacionales y de medicina general.')
-    c.drawString(30,756, 'Calle 4 #4 -97  Facatativá (Cundinamarca).')
-    
-    logo=os.path.join(os.path.dirname(os.path.abspath(__file__)), './Imagenes/logo.png')
-    c.drawImage(logo,410,740,width=156, height=68)
+    c.drawString(margenIzq,768, 'Consultorios ocupacionales y de medicina general.')
+    c.drawString(margenIzq,756, 'Calle 4 #4 -97  Facatativá (Cundinamarca).')
+    c.setFont('Helvetica-Bold', 14)
+    c.drawString(173,715, 'HISTORIA CLÍNICA OCUPACIONAL')
 
-    c.setFont('Helvetica', 14)
-    c.drawString(168,705, 'HISTORIA CLINICA OCUPACIONAL')
+    #LOGOTIPO
+    logo=os.path.join(os.path.dirname(os.path.abspath(__file__)), './Imagenes/logo.png')
+    c.drawImage(logo,440,750,width=109, height=47)
+
+    
+    cabecera = get_object_or_404(Cabecera, paciente=pk)
+    paciente = get_object_or_404(Paciente, cedula=pk)
+    actualizaciones = Actualizacion.objects.filter(cabecera=cabecera.numero_historia)
+    context = {
+        'cabecera': cabecera,
+        'paciente': paciente,
+        'actualizaciones':actualizaciones
+    }
+    
+    #DATOS DEL PACIENTE
+    c.setFont('Helvetica-Bold', 9)
+    
+    c.drawString(margenIzq,688, 'Paciente:')
+    c.drawString(margenIzq,678, 'Identificación:')
+    c.drawString(margenIzq+60, 678, '')
+    c.setFont('Helvetica', 9)
+    c.drawString(margenIzq+63,678,paciente.cedula)
+    c.drawString(75,688,paciente.primer_nombre+' '+paciente.segundo_nombre+' '+paciente.primer_apellido+' '+paciente.segundo_apellido)
+
 
     c.save()
     pdf=buffer.getvalue();

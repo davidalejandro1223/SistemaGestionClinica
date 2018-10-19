@@ -149,6 +149,7 @@
                         <h5>Ingresar al examinado al Sistema de Vigilancia Epidemiologica Ocupacional</h5>
                         <p class="ml-2 mb-4 text-justify">{{actualizacion.ingreso_sis_epidem_ocup}}</p>
                 </div>
+                <a href="{% url 'historias_clinicas:reporte_pdf' pk=paciente.cedula %}" class="btn btn-outline-primary btn-block"> Generar PDF </a>
             </div>
         </div>
     </section>
