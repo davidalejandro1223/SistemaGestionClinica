@@ -21,7 +21,6 @@ from django.http import HttpResponse
 from reportlab.lib.utils import ImageReader
 
 
-
 # Create your views here.
 class ActualizacionCreateView(CreateView):
     model = Actualizacion
@@ -90,16 +89,16 @@ def report(request, pk):
     #HEADER
     c.setLineWidth(.3)
     c.setFont('Helvetica-Bold', 14)
-    c.drawString(margenIzq,780, 'CONSULTORIOS MÉDICOS HERMANOS RODRÍGUEZ')
+    c.drawString(margenIzq+177,780, 'CONSULTORIOS MÉDICOS HERMANOS RODRÍGUEZ')
     c.setFont('Helvetica', 11)
-    c.drawString(margenIzq,768, 'Consultorios ocupacionales y de medicina general.')
-    c.drawString(margenIzq,756, 'Calle 4 #4 -97  Facatativá (Cundinamarca).')
+    c.drawString(margenIzq+285,768, 'Consultorios ocupacionales y de medicina general.')
+    c.drawString(margenIzq+324,756, 'Calle 4 #4 -97  Facatativá (Cundinamarca).')
     c.setFont('Helvetica-Bold', 14)
-    c.drawString(173,715, 'HISTORIA CLÍNICA OCUPACIONAL')
+    c.drawString(173,715, 'CERTIFICADO DE APTITUD LABORAL')
 
     #LOGOTIPO
     logo=os.path.join(os.path.dirname(os.path.abspath(__file__)), './Imagenes/logo.png')
-    c.drawImage(logo,440,750,width=109, height=47)
+    c.drawImage(logo,margenIzq,750,width=109, height=47)
 
     
     cabecera = get_object_or_404(Cabecera, paciente=pk)
@@ -113,13 +112,18 @@ def report(request, pk):
     
     #DATOS DEL PACIENTE
     c.setFont('Helvetica-Bold', 9)
-    
-    c.drawString(margenIzq,688, 'Paciente:')
-    c.drawString(margenIzq,678, 'Identificación:')
-    c.drawString(margenIzq+60, 678, '')
+    c.drawString(margenIzq,668, 'Nombre:')
+    c.drawString(margenIzq,656, 'Identificación:')
+    c.drawString(margenIzq+165, 656, 'Edad:')
+    c.drawString(margenIzq+245, 656, 'Sexo:')
+    c.drawString(margenIzq, 644, 'Empresa:')
+
     c.setFont('Helvetica', 9)
-    c.drawString(margenIzq+63,678,paciente.cedula)
-    c.drawString(75,688,paciente.primer_nombre+' '+paciente.segundo_nombre+' '+paciente.primer_apellido+' '+paciente.segundo_apellido)
+    c.drawString(margenIzq+63,656,paciente.cedula)
+    c.drawString(75,668,paciente.primer_nombre+' '+paciente.segundo_nombre+' '+paciente.primer_apellido+' '+paciente.segundo_apellido)
+    #c.drawString(margenIzq+190, 656, paciente.edad)
+    c.drawString(margenIzq+272,656, paciente.sexo)
+    #c.drawString(margenIzq+50, 644, )
 
 
     c.save()
@@ -128,4 +132,3 @@ def report(request, pk):
     response.write(pdf)
     return response
 
-   

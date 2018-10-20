@@ -17,7 +17,8 @@ class Paciente(models.Model):
     )
     sexos = (
         ('masculino', 'Masculino'),
-        ('femenino', 'Femenino')
+        ('femenino', 'Femenino'),
+        ('otro', 'Otro')
     )
     
     cedula = models.CharField(primary_key=True, max_length=11)

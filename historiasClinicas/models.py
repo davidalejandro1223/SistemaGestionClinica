@@ -32,6 +32,7 @@ class Actualizacion(models.Model):
         ('cambio labor','Cambio labor'),
         ('reincorporacion','Reincorporacion laboral'),
         ('rev paraclinicos','Rev. Paraclinicos'),
+        ('manipulacion de alimentos','Manipulacion de alimentos'),
     )
 
     conceptos_valoracion_medica = (
@@ -42,6 +43,7 @@ class Actualizacion(models.Model):
         ('apto alturas','Apto para labor el alturas'),
         ('apto continuacion labor','Apto para continuar desempeñando su labor'),
         ('examen de retiro','Examen de retiro'),
+        ('apto para manipulación de alimentos','Apto para manipulación de alimentos'),
     )
 
     restr_laborales = (
@@ -52,6 +54,7 @@ class Actualizacion(models.Model):
     )
 
     remitenicia = (
+        ('ninguno', 'Ninguno'),
         ('se remite EPS','Se remite a EPS'),
         ('continuar manejo medico EPS','Continuar manejo medico por EPS'),
         ('se remite ARL','Se remite a ARL'),
@@ -94,11 +97,11 @@ class Actualizacion(models.Model):
     antecedentes_ginecobstetricos=models.TextField()
 
     #   Examen Fisico
-    ta=models.IntegerField(verbose_name='TA')
+    ta=models.CharField(max_length=9, verbose_name='TA')
     fc=models.IntegerField(verbose_name='FC')
     fr=models.IntegerField(verbose_name='FR')
-    peso=models.IntegerField(blank=True)
-    talla=models.IntegerField(blank=True)
+    peso=models.DecimalField(max_digits=5,decimal_places=2)
+    talla=models.DecimalField(max_digits=5,decimal_places=2)
     imc=models.IntegerField(verbose_name='IMC')
     cabeza_y_cuello=models.CharField(max_length=500)
     sentidos=models.CharField(max_length=500)
