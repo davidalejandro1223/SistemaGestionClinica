@@ -1,0 +1,16 @@
+#section-container {
+    margin: 1em 0;
+}
+
+.column {
+    border-radius: 1em;
+    background: white;
+    padding-top: .5em;
+    padding-bottom: .5em;
+}
+
+.subtitulo{
+    margin-bottom: .5em;
+    margin-top: 1.5em;
+    text-align: center;
+}
