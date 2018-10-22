@@ -6,6 +6,7 @@ from .models import Cabecera, Actualizacion
 from pacientes.models import Paciente
 from django.views.generic.list import ListView
 from django.views.generic import CreateView
+
 #Librerias para la generación del PDF
 import os
 import os.path
@@ -19,6 +20,8 @@ from reportlab.lib.enums import TA_CENTER
 from reportlab.lib import colors
 from django.http import HttpResponse
 from reportlab.lib.utils import ImageReader
+from reportlab.lib.units import inch
+from reportlab.lib.colors import black
 
 
 # Create your views here.
@@ -94,7 +97,7 @@ def report(request, pk):
     c.drawString(margenIzq+285,768, 'Consultorios ocupacionales y de medicina general.')
     c.drawString(margenIzq+324,756, 'Calle 4 #4 -97  Facatativá (Cundinamarca).')
     c.setFont('Helvetica-Bold', 14)
-    c.drawString(173,715, 'CERTIFICADO DE APTITUD LABORAL')
+    c.drawString(173,725, 'CERTIFICADO DE APTITUD LABORAL')
 
     #LOGOTIPO
     logo=os.path.join(os.path.dirname(os.path.abspath(__file__)), './Imagenes/logo.png')
@@ -112,20 +115,33 @@ def report(request, pk):
     
     #DATOS DEL PACIENTE
     c.setFont('Helvetica-Bold', 9)
+    c.drawString(margenIzq,688, 'Fecha de consulta:')
     c.drawString(margenIzq,668, 'Nombre:')
-    c.drawString(margenIzq,656, 'Identificación:')
-    c.drawString(margenIzq+165, 656, 'Edad:')
-    c.drawString(margenIzq+245, 656, 'Sexo:')
-    c.drawString(margenIzq, 644, 'Empresa:')
+    c.drawString(margenIzq,648, 'Identificación:')
+    c.drawString(margenIzq+265, 628, 'Edad:')
+    c.drawString(margenIzq+265, 648, 'Sexo:')
+    c.drawString(margenIzq,628, 'Fecha de Nacimiento:')
+    c.drawString(margenIzq, 608, 'EPS:')
+    c.drawString(margenIzq, 588, 'ARL:')
+    c.drawString(margenIzq, 568, 'Empresa:')
+    c.drawString(margenIzq, 548, 'Cargo:')
 
     c.setFont('Helvetica', 9)
-    c.drawString(margenIzq+63,656,paciente.cedula)
+    c.drawString(margenIzq+63,648,paciente.cedula)
     c.drawString(75,668,paciente.primer_nombre+' '+paciente.segundo_nombre+' '+paciente.primer_apellido+' '+paciente.segundo_apellido)
-    #c.drawString(margenIzq+190, 656, paciente.edad)
-    c.drawString(margenIzq+272,656, paciente.sexo)
-    #c.drawString(margenIzq+50, 644, )
+    #c.drawString(margenIzq+190, 648, paciente.edad)
+    c.drawString(margenIzq+292,648, paciente.sexo)
+    #c.drawString(margenIzq+90, 628, 'F.Nacimiento')
+    #c.drawString(margenIzq+30, 608, 'eps')
+    #c.drawString(margenIzq+30, 588, 'ARL:')
+    #c.drawString(margenIzq+50, 568, 'empresa')
+    #c.drawString(margenIzq+50, 548, 'cargo')
 
+    c.setStrokeColor(black)
+    c.setLineWidth(2)
+    c.rect(margenIzq-2,540, 538,165, fill=0)
 
+    
     c.save()
     pdf=buffer.getvalue();
     buffer.close()
