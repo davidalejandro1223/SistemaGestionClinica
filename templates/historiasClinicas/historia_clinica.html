@@ -50,106 +50,19 @@
             </div>
         </div>
     </section>
-    {% for actualizacion in actualizaciones %}
     <section id="section-container">
-        <div class="container-fluid">
-            <div class="row fila ml-2 mr-2 p-3 justify-content-around">
-                <div class="col-12 text-center mb-4 mt-2">
-                    <h4>
-                        Fecha de actualizacion: {{actualizacion.fecha_actualizacion}}
-                    </h4>
-                </div>
-                <div class="border border-secondary rounded col-12 col-md-6 col-lg-4 mb-3">
-                    <h4 class="mb-3 mt-2 text-center font-weight-bold">Identificacion</h4>
-                    <h5>Empresa</h5>
-                    <p class="ml-2 mb-4">{{actualizacion.empresa}}</p>
-                    <h5>Cargo aspirado</h5>
-                    <p class="ml-2 mb-4">{{actualizacion.cargo_aspirado}}</p>
-                    <h5>EPS</h5>
-                    <p class="ml-2 mb-4">{{actualizacion.eps}}</p>
-                    <h5>ARL</h5>
-                    <p class="ml-2 mb-4">{{actualizacion.arl}}</p>
-                    <h5>Examen</h5>
-                    <p class="ml-2 mb-4">{{actualizacion.get_examen_actual_display}}</p>
-                </div>
-                <div class="border border-secondary rounded col-12 col-md-6 col-lg-7 mb-3">
-                    <h4 class="mb-3 mt-2 text-center font-weight-bold">Antecedentes</h4>
-                    <h5>Antecedentes personales</h5>
-                    <p class="ml-2 mb-4 text-justify">{{actualizacion.antecedentes_personales}}</p>
-                    <h5>Antecedentes familiares</h5>
-                    <p class="ml-2 mb-4 text-justify">{{actualizacion.antecedentes_laborales}}</p>
-                    <h5>Antecedentes laborales</h5>
-                    <p class="ml-2 mb-4 text-justify">{{actualizacion.antecedentes_familiares}}</p>
-                    <h5>Antecedentes ginecobstetricos</h5>
-                    <p class="ml-2 mb-4 text-justify">{{actualizacion.antecedentes_ginecobstetricos}}</p>
-                </div>
-                <div class="border border-secondary rounded col-12 col-lg-5 mb-3 mt-2">
-                        <h4 class="mb-3 mt-2 text-center font-weight-bold">Examen Físico</h4>
-                        <div class="row">
-                            <div class="col-12 col-lg-6 mt-2">
-                                    <h5>Tension Arterial</h5>
-                                    <p class="ml-2 mb-4 text-justify">{{actualizacion.ta}}</p>
-                                    <h5>Frecuencia Cardiaca</h5>
-                                    <p class="ml-2 mb-4 text-justify">{{actualizacion.fc}}</p>
-                                    <h5>Frecuencia Respiratoria</h5>
-                                    <p class="ml-2 mb-4 text-justify">{{actualizacion.fr}}</p>
-                                    <h5>Peso</h5>
-                                    <p class="ml-2 mb-4 text-justify">{{actualizacion.peso}}</p>
-                                    <h5>Talla</h5>
-                                    <p class="ml-2 mb-4 text-justify">{{actualizacion.talla}}</p>
-                                    <h5>IMC</h5>
-                                    <p class="ml-2 mb-4 text-justify">{{actualizacion.imc}}</p>
+        <div class="container">
+            <div class="row fila">
+                <div class="col-12">
+                    <div class="list-group">
+                        {% for actualizacion in actualizaciones %}
+                        <a href="{% url 'historias_clinicas:detalle_actualizacion' pk=paciente.cedula pk_A=actualizacion.pk %}" class="list-group-item list-group-item-action flex-column">
+                            <div class="d-flex w-100 justify-content-center">
+                            <h5 class="mb-1 text-center">Fecha de la consulta: {{actualizacion.fecha_actualizacion}}</h5>
                             </div>
-                            <div class="col-12 col-lg-6 mt-2">
-                                    <h5>Cabeza Y Cuello</h5>
-                                    <p class="ml-2 mb-4 text-justify">{{actualizacion.cabeza_y_cuello}}</p>
-                                    <h5>Sentidos</h5>
-                                    <p class="ml-2 mb-4 text-justify">{{actualizacion.sentidos}}</p>
-                                    <h5>Cardiopulmonar</h5>
-                                    <p class="ml-2 mb-4 text-justify">{{actualizacion.cardiopulmonar}}</p>
-                                    <h5>Abdomen</h5>
-                                    <p class="ml-2 mb-4 text-justify">{{actualizacion.abdomen}}</p>
-                                    <h5>Osteomuscular</h5>
-                                    <p class="ml-2 mb-4 text-justify">{{actualizacion.osteomuscular}}</p>
-                                    <h5>Neurologico</h5>
-                                    <p class="ml-2 mb-4 text-justify">{{actualizacion.neurologico}}</p>
-                                    <h5>Esfera mental</h5>
-                                    <p class="ml-2 mb-4 text-justify">{{actualizacion.esfera_mental}}</p>
-                            </div>
-                        </div>     
+                        </a>
+                    </div>
                 </div>
-                <div class="border border-secondary rounded col-12 col-lg-6 mb-3 mt-2">
-                        <h4 class="mb-3 mt-2 text-center font-weight-bold">Concepto de valoración médica</h4>
-                        <h5>valoración médica</h5>
-                        <p class="ml-2 mb-4 text-justify">{{actualizacion.valoracion_medica}}</p>
-                        <h5>Secuela de accidente de trabajo</h5>
-                        <p class="ml-2 mb-4 text-justify">{{actualizacion.secuela_acci_trab}}</p>
-                        <h5>Enfermedad profesional</h5>
-                        <p class="ml-2 mb-4 text-justify">{{actualizacion.enfer_pro}}</p>
-                        <h5>Enfermedad relacionada con el trabajo</h5>
-                        <p class="ml-2 mb-4 text-justify">{{actualizacion.enfer_rel_trabajo}}</p>
-                        <h5>Fecha del diferencial</h5>
-                        <p class="ml-2 mb-4 text-justify">{{actualizacion.fecha_dxco}}</p>
-                        <h5>Fecha del accidente de trabajo</h5>
-                        <p class="ml-2 mb-4 text-justify">{{actualizacion.fecha_at}}</p>
-                </div>
-                <div class="border border-secondary rounded col-11 mt-2 mb-3">
-                        <h4 class="mb-3 mt-2 text-center font-weight-bold">Resultados de laboratorio</h4>
-                        <p class="ml-2 mb-4 text-justify">{{actualizacion.resultados_laboratorio}}</p>
-                </div>
-                <div class="border border-secondary rounded col-11 mb-3 mt-2">
-                        <h4 class="mb-3 mt-2 text-center font-weight-bold">Recomendaciones para el trabajador</h4>
-                        <h5>Restricciones laborales</h5>
-                        <p class="ml-2 mb-4 text-justify">{{actualizacion.restricciones_laborales}}</p>
-                        <h5>Remite a</h5>
-                        <p class="ml-2 mb-4 text-justify">{{actualizacion.get_remite_display}}</p>
-                        <h4 class="mb-3 mt-2 text-center font-weight-bold">Recomendaciones para la empresa</h4>
-                        <h5>Otras</h5>
-                        <p class="ml-2 mb-4 text-justify">{{actualizacion.otras}}</p>
-                        <h5>Ingresar al examinado al Sistema de Vigilancia Epidemiologica Ocupacional</h5>
-                        <p class="ml-2 mb-4 text-justify">{{actualizacion.ingreso_sis_epidem_ocup}}</p>
-                </div>
-                <a href="{% url 'historias_clinicas:reporte_pdf' pk=paciente.cedula %}" class="btn btn-outline-primary btn-block"> Generar PDF </a>
             </div>
         </div>
     </section>
