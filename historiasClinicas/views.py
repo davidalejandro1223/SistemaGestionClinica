@@ -5,7 +5,7 @@ from django.shortcuts import render, get_object_or_404
 from .models import Cabecera, Actualizacion
 from pacientes.models import Paciente
 from django.views.generic.list import ListView
-from django.views.generic import CreateView
+from django.views.generic import CreateView, DetailView
 
 #Librerias para la generación del PDF
 import os
@@ -67,6 +67,24 @@ class ActualizacionCreateView(CreateView):
         form.instance.cabecera = Cabecera.objects.get(numero_historia=self.kwargs.get('pk'))
         return super(ActualizacionCreateView, self).form_valid(form)
 
+
+class ActualizacionDetailView(DetailView):
+    model = Actualizacion
+    pk_url_kwarg = 'pk_A'
+    
+    def get_queryset(self):
+        queryset = Actualizacion.objects.filter(id=self.kwargs.get('pk_A'))
+        print(queryset.values())
+        return queryset
+    
+    
+    def get_context_data(self, **kwargs):
+        context = super(ActualizacionDetailView, self).get_context_data(**kwargs)
+        context['paciente'] = Paciente.objects.get(cedula=self.kwargs['pk'])
+        return context
+    
+    
+
 def historia_paciente(request, pk):
     cabecera = get_object_or_404(Cabecera, paciente=pk)
     paciente = get_object_or_404(Paciente, cedula=pk)
@@ -82,7 +100,7 @@ def historia_paciente(request, pk):
 class HistoriaClinicaListView(ListView):
     model = Cabecera
 
-def report(request, pk):
+def report(request, pk, pk_A):
     margenIzq=30;
     response = HttpResponse(content_type='applicatio/pdf')
     response['content-Disposition'] = 'attachment; filename= historia.pdf'
@@ -100,13 +118,13 @@ def report(request, pk):
     c.drawString(173,725, 'CERTIFICADO DE APTITUD LABORAL')
 
     #LOGOTIPO
-    logo=os.path.join(os.path.dirname(os.path.abspath(__file__)), './Imagenes/logo.png')
+    logo=os.path.join(os.path.dirname(os.path.abspath(__file__)), './Impkpkagenes/logo.png')
     c.drawImage(logo,margenIzq,750,width=109, height=47)
 
     
     cabecera = get_object_or_404(Cabecera, paciente=pk)
     paciente = get_object_or_404(Paciente, cedula=pk)
-    actualizaciones = Actualizacion.objects.filter(cabecera=cabecera.numero_historia)
+    actualizaciones = Actualizacion.objects.get(id=pk_A)
     context = {
         'cabecera': cabecera,
         'paciente': paciente,
