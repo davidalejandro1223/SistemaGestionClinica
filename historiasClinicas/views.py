@@ -102,16 +102,9 @@ def historia_paciente(request, pk):
 class HistoriaClinicaListView(ListView):
     model = Cabecera
 
-<<<<<<< HEAD
-def report(request, pk):
-    
-    PAGE_WIDTH  = defaultPageSize[0]
-
-    margenIzq=30
-=======
 def report(request, pk, pk_A):
     margenIzq=30;
->>>>>>> fbb946636d88b6a2eda1a16b6369e68f71d97307
+    PAGE_WIDTH  = defaultPageSize[0]
     response = HttpResponse(content_type='applicatio/pdf')
     response['content-Disposition'] = 'attachment; filename= historia.pdf'
     buffer=BytesIO()
@@ -135,17 +128,17 @@ def report(request, pk, pk_A):
     c.drawString((PAGE_WIDTH - text_width) / 2.0,725, 'CERTIFICADO DE APTITUD LABORAL')
 
     #LOGOTIPO
-    logo=os.path.join(os.path.dirname(os.path.abspath(__file__)), './Impkpkagenes/logo.png')
+    logo=os.path.join(os.path.dirname(os.path.abspath(__file__)), './Imagenes/logo.png')
     c.drawImage(logo,margenIzq,750,width=109, height=47)
 
     
     cabecera = get_object_or_404(Cabecera, paciente=pk)
     paciente = get_object_or_404(Paciente, cedula=pk)
-    actualizaciones = Actualizacion.objects.get(id=pk_A)
+    actualizacion = Actualizacion.objects.get(id=pk_A)
     context = {
         'cabecera': cabecera,
         'paciente': paciente,
-        'actualizaciones':actualizaciones
+        'actualizacion':actualizacion
     }
     
     #DATOS DEL PACIENTE
@@ -168,7 +161,7 @@ def report(request, pk, pk_A):
     #c.drawString(margenIzq+190, 648, paciente.edad)
     c.drawString(margenIzq+292,648, paciente.sexo)
     #c.drawString(margenIzq+90, 628, 'F.Nacimiento')
-    #c.drawString(margenIzq+30, 608, 'eps')
+    c.drawString(margenIzq+30, 608, actualizacion.eps)
     #c.drawString(margenIzq+30, 588, 'ARL:')
     #c.drawString(margenIzq+50, 568, 'empresa')
     #c.drawString(margenIzq+50, 548, 'cargo')
@@ -214,9 +207,9 @@ def report(request, pk, pk_A):
     
 
     #   Contenido
-    #high = 415
-    #cadena=[Paragraph('''A''', styleN)]
-    #dataTablaConcepto.append(cadena)
+    high = 415
+    cadena=[Paragraph('''A''', styleN)]
+    dataTablaConcepto.append(cadena)
 
     width, height = A4
     tablaConcepto = Table(dataTablaConcepto, colWidths=[19*cm, 9.5*cm])
