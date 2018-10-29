@@ -8,6 +8,7 @@ from django.views.generic.list import ListView
 from django.views.generic import CreateView, DetailView
 
 #Librerias para la generación del PDF
+import datetime
 import os
 import os.path
 from io import BytesIO
@@ -16,7 +17,7 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.platypus import Paragraph, Table, TableStyle, Image
-from reportlab.lib.enums import TA_CENTER
+from reportlab.lib.enums import TA_CENTER, TA_JUSTIFY
 from reportlab.lib import colors
 from django.http import HttpResponse
 from reportlab.lib.utils import ImageReader
@@ -110,6 +111,16 @@ def report(request, pk, pk_A):
     buffer=BytesIO()
     c = canvas.Canvas(buffer, pagesize=A4)
 
+
+    cabecera = get_object_or_404(Cabecera, paciente=pk)
+    paciente = get_object_or_404(Paciente, cedula=pk)
+    actualizacion = Actualizacion.objects.get(id=pk_A)
+    context = {
+        'cabecera': cabecera,
+        'paciente': paciente,
+        'actualizacion':actualizacion
+    }
+
     #HEADER
     c.setLineWidth(.3)
     c.setFont('Helvetica-Bold', 14)
@@ -126,28 +137,23 @@ def report(request, pk, pk_A):
     text_width = stringWidth(text,'Helvetica-Bold',14)
     c.setFont('Helvetica-Bold', 14)
     c.drawString((PAGE_WIDTH - text_width) / 2.0,725, 'CERTIFICADO DE APTITUD LABORAL')
+    text='Motivo: '+actualizacion.examen_actual
+    text_width = stringWidth(text,'Helvetica-Bold',14)
+    c.drawString((PAGE_WIDTH - text_width) / 2.0,710, text)
+
 
     #LOGOTIPO
     logo=os.path.join(os.path.dirname(os.path.abspath(__file__)), './Imagenes/logo.png')
     c.drawImage(logo,margenIzq,750,width=109, height=47)
 
     
-    cabecera = get_object_or_404(Cabecera, paciente=pk)
-    paciente = get_object_or_404(Paciente, cedula=pk)
-    actualizacion = Actualizacion.objects.get(id=pk_A)
-    context = {
-        'cabecera': cabecera,
-        'paciente': paciente,
-        'actualizacion':actualizacion
-    }
-    
     #DATOS DEL PACIENTE
     c.setFont('Helvetica-Bold', 9)
     c.drawString(margenIzq,688, 'Fecha de consulta:')
     c.drawString(margenIzq,668, 'Nombre:')
     c.drawString(margenIzq,648, 'Identificación:')
-    c.drawString(margenIzq+265, 628, 'Edad:')
-    c.drawString(margenIzq+265, 648, 'Sexo:')
+    c.drawString(margenIzq+255, 628, 'Edad:')
+    c.drawString(margenIzq+255, 648, 'Sexo:')
     c.drawString(margenIzq,628, 'Fecha de Nacimiento:')
     c.drawString(margenIzq, 608, 'EPS:')
     c.drawString(margenIzq, 588, 'ARL:')
@@ -155,16 +161,17 @@ def report(request, pk, pk_A):
     c.drawString(margenIzq, 548, 'Cargo:')
 
     c.setFont('Helvetica', 9)
-    c.drawString(margenIzq+63,648,paciente.cedula)
+    c.drawString(margenIzq+85, 688, actualizacion.fecha_actualizacion.strftime('%m/%d/%Y'))
+    c.drawString(margenIzq+64,648,paciente.cedula)
     c.drawString(75,668,paciente.primer_nombre+' '+paciente.segundo_nombre+' '
         +paciente.primer_apellido+' '+paciente.segundo_apellido)
     #c.drawString(margenIzq+190, 648, paciente.edad)
-    c.drawString(margenIzq+292,648, paciente.sexo)
-    #c.drawString(margenIzq+90, 628, 'F.Nacimiento')
-    c.drawString(margenIzq+30, 608, actualizacion.eps)
-    #c.drawString(margenIzq+30, 588, 'ARL:')
-    #c.drawString(margenIzq+50, 568, 'empresa')
-    #c.drawString(margenIzq+50, 548, 'cargo')
+    c.drawString(margenIzq+282,648, paciente.sexo)
+    c.drawString(margenIzq+98, 628, paciente.fecha_nacimiento.strftime('%m/%d/%Y'))
+    c.drawString(margenIzq+28, 608, actualizacion.eps)
+    c.drawString(margenIzq+28, 588, actualizacion.arl)
+    c.drawString(margenIzq+48, 568, actualizacion.empresa)
+    c.drawString(margenIzq+38, 548, actualizacion.cargo_aspirado)
 
     #Tabla examenes
     #   Header
@@ -182,6 +189,7 @@ def report(request, pk, pk_A):
     styleN=styles["BodyText"]
     styleN.fontSize = 9
     styleN.fontName = 'Helvetica'
+
 
     high = 480
     cadena=[Paragraph('''Examen medico ocupacional básico.''', styleN)]
@@ -207,8 +215,9 @@ def report(request, pk, pk_A):
     
 
     #   Contenido
+    valoracion=actualizacion.valoracion_medica
     high = 415
-    cadena=[Paragraph('''A''', styleN)]
+    cadena=[Paragraph(valoracion, styleN)]
     dataTablaConcepto.append(cadena)
 
     width, height = A4
@@ -225,25 +234,95 @@ def report(request, pk, pk_A):
 
     #Tabla observaciones
     #   Header
+    styleN.alignment = TA_JUSTIFY
     observacion=Paragraph('''OBSERVACIONES''', styleBH)
+    dataTablaEncab=[]
     dataTablaObserv=[]
-    dataTablaObserv.append([observacion])
+    dataTablaEncab.append([observacion])
 
     #   Contenido
-    high = 50
-    cadena=[Paragraph('''A''', styleN)]
+    high = 280
+    
+    cadena=[Paragraph('''''', styleN)]
     dataTablaObserv.append(cadena)
 
     width, height = A4
-    tablaObserv = Table(dataTablaObserv, colWidths=[19*cm, 9.5*cm], rowHeights=(5*cm, 5*cm))
+    tablaEncab = Table(dataTablaEncab, colWidths=[19*cm, 9.5*cm])
+    tablaEncab.setStyle(TableStyle([
+        ('INNERGRID', (0,0), (-1,-1), 1, colors.black),
+        ('BOX', (0,0), (-1,1), 1, colors.black),]))
+
+
+    tablaObserv = Table(dataTablaObserv, colWidths=[19*cm, 9.5*cm], rowHeights=(3*cm))
     tablaObserv.setStyle(TableStyle([
         ('INNERGRID', (0,0), (-1,-1), 1, colors.black),
         ('BOX', (0,0), (-1,-1), 1, colors.black),]))
     #c.drawString(margenIzq, 490, 'Examen medico ocupacional básico.')
     
+    tablaEncab.wrapOn(c,width, height)
+    tablaEncab.drawOn(c, margenIzq-2, high+83)
+    c.showPage
+
     tablaObserv.wrapOn(c,width, height)
     tablaObserv.drawOn(c, margenIzq-2, high)
     c.showPage
+
+    #   Parte final - consideraciones
+    high = 218
+    consideracion=[Paragraph('''IMPORTANTE: 1) El trabajador recibió orientación medica sobre las recomendaciones necesarias para 
+    prevenir posibles efectos en la salud relacionados o asociados con los riesgos ocupacionales propios en su cargo. 
+     2) Señor(a) trabajador(a): a partir de la fecha, usted cuenta con 30 días para seguir y realizar las indicaciones del 
+     medico especialista en salud ocupacional registradas en este documento.''', styleN)]
+    dataTablaConsideracion=[]
+    dataTablaConsideracion.append([consideracion])
+    tablaConsideracion = Table(dataTablaConsideracion, colWidths=[19*cm, 9.5*cm], rowHeights=(2*cm))
+    tablaConsideracion.setStyle(TableStyle([
+        ('INNERGRID', (0,0), (-1,-1), 1, colors.black),
+        ('BOX', (1,1), (-1,-1), 1, colors.black),]))
+    tablaConsideracion.wrapOn(c,width, height)
+    tablaConsideracion.drawOn(c, margenIzq-2, high)
+    c.showPage
+
+    high = 188
+    declaracion=[Paragraph('''DECLARACIÓN DEL ASPIRANTE: Manifiesto con mi firma o huella que no omití datos relevantes 
+    en mis antecedentes que pudieran influir sobre la evaluación de mi estado actual de salud.''', styleN)]
+    dataDeclaracion=[]
+    dataDeclaracion.append([declaracion])
+    tablaDeclaracion = Table(dataDeclaracion, colWidths=[19*cm, 9.5*cm], rowHeights=(1*cm))
+    tablaDeclaracion.setStyle(TableStyle([
+        ('INNERGRID', (0,0), (-1,-1), 1, colors.black),
+        ('BOX', (1,1), (-1,-1), 1, colors.black),]))
+    tablaDeclaracion.wrapOn(c,width, height)
+    tablaDeclaracion.drawOn(c, margenIzq-2, high)
+    c.showPage
+
+    high = 108
+    resolucion=[Paragraph('''El contenido de la historia clínica, tiene carácter confidencial y su custodia está regulada 
+    por la resolución 1918 del 5 de junio de 2009, del cual se transcribe a continuación algunos apartes. La custodia de la 
+    evaluación medica y de la historia clínica ocupacional, está a cargo del prestador del servicio de salud ocupacional, que 
+    le generó en el curso de la atención, cumpliendo los requisitos y procedimientos de archivo conforme a las normas legales 
+    vigentes para la historia clínica. En ningún caso los empleadores podán tener, conservar o anexar copia de las evaluaciones 
+    medicas ocupacionales y de la historia clínica ocupacional a la hoja del vida del trabajador.''', styleN)]
+    dataResolucion=[]
+    dataResolucion.append([resolucion])
+    tablaResolucion = Table(dataResolucion, colWidths=[19*cm, 9.5*cm], rowHeights=(2.75*cm))
+    tablaResolucion.setStyle(TableStyle([
+        ('INNERGRID', (0,0), (-1,-1), 1, colors.black),
+        ('BOX', (1,1), (-1,-1), 1, colors.black),]))
+    tablaResolucion.wrapOn(c,width, height)
+    tablaResolucion.drawOn(c, margenIzq-2, high)
+    c.showPage
+
+
+    c.line(margenIzq+60,50,margenIzq+230,50)
+    c.line(margenIzq+300,50,margenIzq+470,50)
+    c.drawString(margenIzq+62,40, 'Profesional')
+    c.drawString(margenIzq+62,30, 'Lic. Ocupacional')
+    c.drawString(margenIzq+302,40,paciente.primer_nombre+' '+paciente.segundo_nombre+' '
+        +paciente.primer_apellido+' '+paciente.segundo_apellido)
+    c.drawString(margenIzq+302,30, 'Identificación: ')
+    c.drawString(margenIzq+362,30,paciente.cedula)
+
 
     c.setStrokeColor(black)
     c.setLineWidth(1)

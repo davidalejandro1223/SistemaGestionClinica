@@ -102,7 +102,7 @@ class Actualizacion(models.Model):
     fr=models.IntegerField(verbose_name='FR')
     peso=models.DecimalField(max_digits=5,decimal_places=2)
     talla=models.DecimalField(max_digits=5,decimal_places=2)
-    imc=models.IntegerField(verbose_name='IMC')
+    imc=models.DecimalField(max_digits=5,decimal_places=2,verbose_name='IMC')
     cabeza_y_cuello=models.CharField(max_length=500)
     sentidos=models.CharField(max_length=500)
     cardiopulmonar=models.CharField(max_length=500)
