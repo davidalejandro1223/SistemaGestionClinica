@@ -10,9 +10,22 @@ from django.core.urlresolvers import reverse_lazy
 
 # Create your views here.
 
+
 class CrearPaciente(CreateView):
     model = Paciente
-    fields = '__all__'
+    fields = [
+        'cedula',
+        'primer_nombre',
+        'segundo_nombre',
+        'primer_apellido',
+        'segundo_apellido',
+        'direccion',
+        'ciudad',
+        'fecha_nacimiento',
+        'estado_civil',
+        'telefono',
+        'sexo',
+    ]
 
 
 class DetallePaciente(DetailView):

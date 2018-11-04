@@ -6,6 +6,7 @@ from django.urls import reverse
 
 # Create your models here.
 
+
 class Paciente(models.Model):
     estados_civiles = (
         ('soltero', 'Soltero/a'),
@@ -20,7 +21,7 @@ class Paciente(models.Model):
         ('femenino', 'Femenino'),
         ('otro', 'Otro')
     )
-    
+
     cedula = models.CharField(primary_key=True, max_length=11)
     primer_nombre = models.CharField(max_length=15)
     segundo_nombre = models.CharField(max_length=15, blank=True)
@@ -31,14 +32,11 @@ class Paciente(models.Model):
     fecha_nacimiento = models.DateField()
     estado_civil = models.CharField(max_length=50, choices=estados_civiles)
     telefono = models.CharField(max_length=10)
-    
-    #Nuevos
-    #edad=models.CharField(max_length=2, default='00')
-    sexo=models.CharField(max_length=15, choices=sexos, default='sexo')
-    
+    sexo = models.CharField(max_length=15, choices=sexos, default='sexo')
+    foto = models.ImageField()
+
     def __str__(self):
         return self.cedula
 
     def get_absolute_url(self):
         return reverse('pacientes:detalle_paciente', kwargs={"pk": self.cedula})
-
