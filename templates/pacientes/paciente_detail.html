@@ -13,7 +13,10 @@
     <section id="section-container">
         <div class="container">
             <div class="row fila">
-                <div class="col-12 column">
+                <div class="col-12 col-md-4">
+                    <img src="{{ paciente.foto.url }}" alt="Responsive image" class="img-thumbnail">
+                </div>
+                <div class="col-12 col-md-6 column">
                     <h3>Paciente:</h3>
                     <h2>{{paciente.primer_nombre}} {{paciente.segundo_nombre}} {{paciente.primer_apellido}} {{paciente.segundo_apellido}}</h2><br>
                     <h3>Cedula:</h3>

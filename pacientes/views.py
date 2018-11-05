@@ -7,12 +7,16 @@ from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from .models import Paciente
 from django.core.urlresolvers import reverse_lazy
+from .forms import PacienteForm
+from django.http.response import HttpResponse
 
 # Create your views here.
 
 
 class CrearPaciente(CreateView):
     model = Paciente
+    #form_class = PacienteForm
+    #template_name = 'pacientes/paciente_form.html'
     fields = [
         'cedula',
         'primer_nombre',
@@ -26,6 +30,17 @@ class CrearPaciente(CreateView):
         'telefono',
         'sexo',
     ]
+
+    def post(self, request, *args, **kwargs):
+        form = PacienteForm(request.POST, request.FILES)
+        if form.is_valid():
+            print('es valido')
+            print(request.FILES)
+            form.save()
+            return HttpResponse('funciona con api rest')
+        print('no es valido')
+        print(request.FILES)
+        return HttpResponse('formulario no valido')
 
 
 class DetallePaciente(DetailView):

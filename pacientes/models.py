@@ -33,7 +33,7 @@ class Paciente(models.Model):
     estado_civil = models.CharField(max_length=50, choices=estados_civiles)
     telefono = models.CharField(max_length=10)
     sexo = models.CharField(max_length=15, choices=sexos, default='sexo')
-    foto = models.ImageField()
+    foto = models.ImageField(blank=True)
 
     def __str__(self):
         return self.cedula

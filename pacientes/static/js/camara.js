@@ -1,7 +1,7 @@
 var modalWebcamButton = document.getElementById('webcam-modal-button');
-var backdrop = document.getElementsByClassName('modal-backdrop');
 var photo = null;
 var video = null;
+var fotoTomada = false;
 
 modalWebcamButton.addEventListener('click', function (ev) {
 
@@ -9,7 +9,7 @@ modalWebcamButton.addEventListener('click', function (ev) {
   var streaming = false,
     canvas = document.querySelector('#canvas'),
     startbutton = document.querySelector('#take-picture-button'),
-    width = 400,
+    width = 300,
     height = 0;
 
   navigator.getMedia = (navigator.getUserMedia ||
@@ -58,6 +58,7 @@ modalWebcamButton.addEventListener('click', function (ev) {
   startbutton.addEventListener('click', function (ev) {
     takepicture();
     document.getElementById('label-picture').innerHTML = 'Foto tomada'
+    fotoTomada = true
     ev.preventDefault();
   }, false);
 

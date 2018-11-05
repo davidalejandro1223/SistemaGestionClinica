@@ -142,8 +142,8 @@ class Actualizacion(models.Model):
     )
 
     #reemplazar textfield por datepicker con bootstrap
-    fecha_dxco = models.DateField(verbose_name='Fecha del diagnostico')
-    fecha_at = models.DateField(verbose_name='Fecha accidente de trabajo')
+    fecha_dxco = models.DateField(blank=True, verbose_name='Fecha del diagnostico')
+    fecha_at = models.DateField(blank=True, verbose_name='Fecha accidente de trabajo')
 
     #   Resultados de laboratorios
     resultados_laboratorio=models.TextField(verbose_name='Resultados de laboratorio')
