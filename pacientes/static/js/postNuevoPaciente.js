@@ -42,7 +42,7 @@ $('#submit').on('click', () => {
         formData.append('telefono', document.getElementById('id_telefono').value);
         formData.append('sexo', document.getElementById('id_sexo').value);
         formData.append('foto', blob, document.getElementById('id_cedula').value.concat('-foto','.png'));
-
+        
         $.ajax({
             url: url,
             type: "POST",

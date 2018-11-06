@@ -34,14 +34,12 @@ class CrearPaciente(CreateView):
     def post(self, request, *args, **kwargs):
         form = PacienteForm(request.POST, request.FILES)
         if form.is_valid():
-            print('es valido')
             print(request.FILES)
             form.save()
-            return HttpResponse('funciona con api rest')
+            return HttpResponse('Formulario valido')
         print('no es valido')
         print(request.FILES)
-        return HttpResponse('formulario no valido')
-
+        return HttpResponse('Formulario no valido')
 
 class DetallePaciente(DetailView):
     model = Paciente

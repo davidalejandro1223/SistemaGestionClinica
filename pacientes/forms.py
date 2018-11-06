@@ -9,5 +9,5 @@ class PacienteForm(ModelForm):
     class Meta:
         """Meta definition for pacienteform."""
         model = Paciente
-        exclude = ['foto',]
+        fields = '__all__'
         widgets = {'fecha_nacimiento': forms.DateInput(attrs={'class': 'datepicker'})}
