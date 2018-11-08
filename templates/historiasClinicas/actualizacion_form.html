@@ -48,6 +48,9 @@
                     {% if field.name == 'otras'%}
                     <h4 class="subtitulo">Recomendaciones para la empresa</h4>
                     {% endif %}
+                    {% if field.name == 'observaciones'%}
+                    <h4 class="subtitulo">Observaciones</h4>
+                    {% endif %}
                     <div class="form-group">
                         <label for="{{field.id_for_label}}">{{field.label}}</label> {{ field|add_class:'form-control'}}
                     </div>

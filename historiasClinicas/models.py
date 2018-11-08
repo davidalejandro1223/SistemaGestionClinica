@@ -164,6 +164,8 @@ class Actualizacion(models.Model):
 
     #recomendaciones empresa
     otras=models.TextField(verbose_name='Recomendaciones para la empresa')
+    observaciones=models.TextField(verbose_name='Observaciones')
+
     ingreso_sis_epidem_ocup = models.CharField(
         max_length=50, 
         choices=opciones_sistema_epidemiologico_ocupacional, 

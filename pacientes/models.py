@@ -35,8 +35,10 @@ class Paciente(models.Model):
     sexo = models.CharField(max_length=15, choices=sexos, default='sexo')
     foto = models.ImageField()
 
+
     def __str__(self):
         return self.cedula
 
     def get_absolute_url(self):
         return reverse('pacientes:detalle_paciente', kwargs={"pk": self.cedula})
+ 

@@ -6,11 +6,14 @@ from .models import Cabecera, Actualizacion
 from pacientes.models import Paciente
 from django.views.generic.list import ListView
 from django.views.generic import CreateView, DetailView
+from django.core.files.uploadedfile import InMemoryUploadedFile
 
 #Librerias para la generación del PDF
 import datetime
 import os
 import os.path
+import io
+from datetime import date
 from io import BytesIO
 import xlwt
 from reportlab.pdfgen import canvas
@@ -25,6 +28,7 @@ from reportlab.lib.units import cm
 from reportlab.lib.colors import black
 from reportlab.pdfbase.pdfmetrics import stringWidth
 from reportlab.rl_config import defaultPageSize
+
 
 
 # Create your views here.
@@ -64,6 +68,7 @@ class ActualizacionCreateView(CreateView):
         'remite',
         'otras',
         'ingreso_sis_epidem_ocup',
+        'observaciones'
     ]
 
     def form_valid(self, form):
@@ -146,6 +151,12 @@ def report(request, pk, pk_A):
     logo=os.path.join(os.path.dirname(os.path.abspath(__file__)), './Imagenes/logo.png')
     c.drawImage(logo,margenIzq,750,width=109, height=47)
 
+    #Fotografia
+    
+    url=paciente.foto.url
+    ub=os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), '..'+url)
+    c.drawImage(ub,margenIzq+360,565,width=155, height=110)
+
     
     #DATOS DEL PACIENTE
     c.setFont('Helvetica-Bold', 9)
@@ -165,7 +176,9 @@ def report(request, pk, pk_A):
     c.drawString(margenIzq+64,648,paciente.cedula)
     c.drawString(75,668,paciente.primer_nombre+' '+paciente.segundo_nombre+' '
         +paciente.primer_apellido+' '+paciente.segundo_apellido)
-    #c.drawString(margenIzq+190, 648, paciente.edad)
+    
+
+    c.drawString(margenIzq+282, 628, calcularEdad(paciente.fecha_nacimiento)+' años.')
     c.drawString(margenIzq+282,648, paciente.sexo)
     c.drawString(margenIzq+98, 628, paciente.fecha_nacimiento.strftime('%m/%d/%Y'))
     c.drawString(margenIzq+28, 608, actualizacion.eps)
@@ -242,8 +255,8 @@ def report(request, pk, pk_A):
 
     #   Contenido
     high = 280
-    
-    cadena=[Paragraph('''''', styleN)]
+    observacion=actualizacion.observaciones
+    cadena=[Paragraph(observacion, styleN)]
     dataTablaObserv.append(cadena)
 
     width, height = A4
@@ -335,3 +348,14 @@ def report(request, pk, pk_A):
     response.write(pdf)
     return response
 
+
+def calcularEdad(born):
+    today = date.today()
+    try: 
+        birthday = born.replace(year=today.year)
+    except ValueError: # raised when birth date is February 29 and the current year is not a leap year
+        birthday = born.replace(year=today.year, month=born.month+1, day=1)
+    if birthday > today:
+        return today.year - born.year - 1
+    else:
+        return str(today.year - born.year)
