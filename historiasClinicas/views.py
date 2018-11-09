@@ -112,7 +112,8 @@ def report(request, pk, pk_A):
     margenIzq=30;
     PAGE_WIDTH  = defaultPageSize[0]
     response = HttpResponse(content_type='applicatio/pdf')
-    response['content-Disposition'] = 'attachment; filename= historia.pdf'
+
+    response['content-Disposition'] = 'attachment; filename= '+pk+'-'+pk_A+'.pdf'
     buffer=BytesIO()
     c = canvas.Canvas(buffer, pagesize=A4)
 
