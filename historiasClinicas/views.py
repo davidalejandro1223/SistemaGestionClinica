@@ -155,7 +155,7 @@ def report(request, pk, pk_A):
     #Fotografia
     
     url=paciente.foto.url
-    ub=os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), '..'+url)
+    ub = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + url
     c.drawImage(ub,margenIzq+360,565,width=155, height=110)
 
     
