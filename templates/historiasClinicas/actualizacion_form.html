@@ -55,6 +55,13 @@
                         <label for="{{field.id_for_label}}">{{field.label}}</label> {{ field|add_class:'form-control'}}
                     </div>
                     {% endfor %}
+                    {% if field.name == 'peso'%}
+                    {{ field|add_class:'form-control pesoo'}}
+                    {% elif field.name == 'talla'%}
+                    {{ field|add_class:'form-control tallaa'}}
+                    {% else %}
+                    {{ field|add_class:'form-control'}}
+                    {% endif %}
                     <input type="submit" class="btn btn-outline-primary btn-block">
                 </form>
             </div>
@@ -62,3 +69,7 @@
     </div>
 </section>
 {% endblock content %}
+
+{% block scripts%}
+<script src="{% static 'js/calcularIMC.js' %}"></script>
+{% endblock scripts %}
