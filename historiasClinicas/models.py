@@ -142,8 +142,8 @@ class Actualizacion(models.Model):
     )
 
     #reemplazar textfield por datepicker con bootstrap
-    fecha_dxco = models.DateField(blank=True, verbose_name='Fecha del diagnostico')
-    fecha_at = models.DateField(blank=True, verbose_name='Fecha accidente de trabajo')
+    fecha_dxco = models.DateField(blank=True,null=True, verbose_name='Fecha del diagnostico')
+    fecha_at = models.DateField(blank=True,null=True, verbose_name='Fecha accidente de trabajo')
 
     #   Resultados de laboratorios
     resultados_laboratorio=models.TextField(verbose_name='Resultados de laboratorio')
@@ -195,12 +195,3 @@ def crearCabecera(sender, **kwargs):
     cabecera_usuario = Cabecera.objects.create(
         numero_historia=kwargs['instance'].cedula, paciente=kwargs['instance'])
     cabecera_usuario.save()
-    # actualizacion = Actualizacion.objects.create(
-    #     cabecera=cabecera_usuario, 
-    #     fecha_dxco='1997-12-15',
-    #     fecha_at='1997-12-15',
-    #     peso=0,
-    #     talla=0,
-    #     imc=0  
-    # )
-    # actualizacion.save()

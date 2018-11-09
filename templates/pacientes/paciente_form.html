@@ -28,6 +28,9 @@
                     <div class="form-group">
                         <label for="{{field.id_for_label}}">{{field.label}}</label>
                         {{ field|add_class:'form-control'}}
+                        {% if field.name == 'fecha_nacimiento' %}
+                        <small id="date-help" class="form-text text-muted">Porfavor use el siguente formato 'YYYY-MM-DD'</small>
+                        {% endif %}
                     </div>
                     {% endfor %}
                     <div class="form-group">
