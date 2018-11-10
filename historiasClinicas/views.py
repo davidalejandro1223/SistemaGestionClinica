@@ -179,7 +179,7 @@ def report(request, pk, pk_A):
         +paciente.primer_apellido+' '+paciente.segundo_apellido)
     
 
-    c.drawString(margenIzq+282, 628, calcularEdad(paciente.fecha_nacimiento)+' años.')
+    c.drawString(margenIzq+282, 628, str(calcularEdad(paciente.fecha_nacimiento))+' años.')
     c.drawString(margenIzq+282,648, paciente.sexo)
     c.drawString(margenIzq+98, 628, paciente.fecha_nacimiento.strftime('%m/%d/%Y'))
     c.drawString(margenIzq+28, 608, actualizacion.eps)
@@ -359,4 +359,4 @@ def calcularEdad(born):
     if birthday > today:
         return today.year - born.year - 1
     else:
-        return str(today.year - born.year)
+        return (today.year - born.year)
