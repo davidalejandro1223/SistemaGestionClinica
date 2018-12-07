@@ -1,8 +1,10 @@
-from django.conf.urls import url
+#from django.conf.urls import url
+from django.urls import re_path
 from . import views
 
+app_name = 'usuarios'
 urlpatterns = [
-    url(r'^$', views.autenticar, name = 'autenticar'),
-    url(r'^logout$', views.desautenticar, name = 'desautenticar'),
-    url(r'^inicio$', views.inicio, name = 'inicio'),
+    re_path(r'^$', views.autenticar, name = 'autenticar'),
+    re_path(r'^logout$', views.desautenticar, name = 'desautenticar'),
+    re_path(r'^inicio$', views.inicio, name = 'inicio'),
 ]

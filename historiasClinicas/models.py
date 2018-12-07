@@ -13,7 +13,10 @@ from django.utils import timezone
 class Cabecera(models.Model):
 
     numero_historia = models.CharField(primary_key=True, max_length=15)
-    paciente = models.OneToOneField(Paciente)
+    paciente = models.OneToOneField(
+        Paciente,
+        on_delete=models.CASCADE,
+    )
 
     def __str__(self):
         return self.numero_historia
@@ -75,7 +78,10 @@ class Actualizacion(models.Model):
     fecha_actualizacion = models.DateField(auto_now=True)
     #motivo_consulta = models.TextField(default=None)
     #tratamiento = models.TextField(default=None)
-    cabecera = models.ForeignKey(Cabecera)
+    cabecera = models.ForeignKey(
+        Cabecera,
+        on_delete=models.CASCADE,
+    )
     
     #Nuevos
     empresa = models.CharField(max_length=100)
@@ -186,7 +192,7 @@ class Actualizacion(models.Model):
         return str(self.id)
 
     def get_absolute_url(self):
-        from django.core.urlresolvers import reverse
+        from django.urls import reverse
         return reverse('historias_clinicas:historia_paciente', kwargs={'pk': self.cabecera.numero_historia})
 
 
