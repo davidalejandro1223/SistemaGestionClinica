@@ -79,19 +79,19 @@ class ActualizacionCreateView(CreateView):
 class ActualizacionDetailView(DetailView):
     model = Actualizacion
     pk_url_kwarg = 'pk_A'
-    
+
     def get_queryset(self):
         queryset = Actualizacion.objects.filter(id=self.kwargs.get('pk_A'))
         print(queryset.values())
         return queryset
-    
-    
+
+
     def get_context_data(self, **kwargs):
         context = super(ActualizacionDetailView, self).get_context_data(**kwargs)
         context['paciente'] = Paciente.objects.get(cedula=self.kwargs['pk'])
         return context
-    
-    
+
+
 
 def historia_paciente(request, pk):
     cabecera = get_object_or_404(Cabecera, paciente=pk)
@@ -149,16 +149,18 @@ def report(request, pk, pk_A):
 
 
     #LOGOTIPO
+
     logo=os.path.join(os.path.dirname(os.path.abspath(__file__)), './Imagenes/logo.png')
     c.drawImage(logo,margenIzq,750,width=109, height=47)
 
+
+
+
     #Fotografia
-    
-    url=paciente.foto.url
-    ub = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + url
+    ub=os.path.join(paciente.foto.path)
     c.drawImage(ub,margenIzq+360,565,width=155, height=110)
 
-    
+
     #DATOS DEL PACIENTE
     c.setFont('Helvetica-Bold', 9)
     c.drawString(margenIzq,688, 'Fecha de consulta:')
@@ -177,7 +179,7 @@ def report(request, pk, pk_A):
     c.drawString(margenIzq+64,648,paciente.cedula)
     c.drawString(75,668,paciente.primer_nombre+' '+paciente.segundo_nombre+' '
         +paciente.primer_apellido+' '+paciente.segundo_apellido)
-    
+
 
     c.drawString(margenIzq+282, 628, str(calcularEdad(paciente.fecha_nacimiento))+' años.')
     c.drawString(margenIzq+282,648, paciente.sexo)
@@ -215,7 +217,7 @@ def report(request, pk, pk_A):
         ('INNERGRID', (0,0), (-1,-1), 1, colors.black),
         ('BOX', (0,0), (-1,-1), 1, colors.black),]))
     #c.drawString(margenIzq, 490, 'Examen medico ocupacional básico.')
-    
+
     tabla.wrapOn(c,width, height)
     tabla.drawOn(c, margenIzq-2, high)
     c.showPage
@@ -226,7 +228,7 @@ def report(request, pk, pk_A):
     concepto=Paragraph('''CONCEPTO''', styleBH)
     dataTablaConcepto=[]
     dataTablaConcepto.append([concepto])
-    
+
 
     #   Contenido
     valoracion=actualizacion.valoracion_medica
@@ -240,7 +242,7 @@ def report(request, pk, pk_A):
         ('INNERGRID', (0,0), (-1,-1), 1, colors.black),
         ('BOX', (0,0), (-1,-1), 1, colors.black),]))
     #c.drawString(margenIzq, 490, 'Examen medico ocupacional básico.')
-    
+
     tablaConcepto.wrapOn(c,width, height)
     tablaConcepto.drawOn(c, margenIzq-2, high)
     c.showPage
@@ -272,7 +274,7 @@ def report(request, pk, pk_A):
         ('INNERGRID', (0,0), (-1,-1), 1, colors.black),
         ('BOX', (0,0), (-1,-1), 1, colors.black),]))
     #c.drawString(margenIzq, 490, 'Examen medico ocupacional básico.')
-    
+
     tablaEncab.wrapOn(c,width, height)
     tablaEncab.drawOn(c, margenIzq-2, high+83)
     c.showPage
@@ -283,9 +285,9 @@ def report(request, pk, pk_A):
 
     #   Parte final - consideraciones
     high = 218
-    consideracion=[Paragraph('''IMPORTANTE: 1) El trabajador recibió orientación medica sobre las recomendaciones necesarias para 
-    prevenir posibles efectos en la salud relacionados o asociados con los riesgos ocupacionales propios en su cargo. 
-     2) Señor(a) trabajador(a): a partir de la fecha, usted cuenta con 30 días para seguir y realizar las indicaciones del 
+    consideracion=[Paragraph('''IMPORTANTE: 1) El trabajador recibió orientación medica sobre las recomendaciones necesarias para
+    prevenir posibles efectos en la salud relacionados o asociados con los riesgos ocupacionales propios en su cargo.
+     2) Señor(a) trabajador(a): a partir de la fecha, usted cuenta con 30 días para seguir y realizar las indicaciones del
      medico especialista en salud ocupacional registradas en este documento.''', styleN)]
     dataTablaConsideracion=[]
     dataTablaConsideracion.append([consideracion])
@@ -298,7 +300,7 @@ def report(request, pk, pk_A):
     c.showPage
 
     high = 188
-    declaracion=[Paragraph('''DECLARACIÓN DEL ASPIRANTE: Manifiesto con mi firma o huella que no omití datos relevantes 
+    declaracion=[Paragraph('''DECLARACIÓN DEL ASPIRANTE: Manifiesto con mi firma o huella que no omití datos relevantes
     en mis antecedentes que pudieran influir sobre la evaluación de mi estado actual de salud.''', styleN)]
     dataDeclaracion=[]
     dataDeclaracion.append([declaracion])
@@ -311,11 +313,11 @@ def report(request, pk, pk_A):
     c.showPage
 
     high = 108
-    resolucion=[Paragraph('''El contenido de la historia clínica, tiene carácter confidencial y su custodia está regulada 
-    por la resolución 1918 del 5 de junio de 2009, del cual se transcribe a continuación algunos apartes. La custodia de la 
-    evaluación medica y de la historia clínica ocupacional, está a cargo del prestador del servicio de salud ocupacional, que 
-    le generó en el curso de la atención, cumpliendo los requisitos y procedimientos de archivo conforme a las normas legales 
-    vigentes para la historia clínica. En ningún caso los empleadores podán tener, conservar o anexar copia de las evaluaciones 
+    resolucion=[Paragraph('''El contenido de la historia clínica, tiene carácter confidencial y su custodia está regulada
+    por la resolución 1918 del 5 de junio de 2009, del cual se transcribe a continuación algunos apartes. La custodia de la
+    evaluación medica y de la historia clínica ocupacional, está a cargo del prestador del servicio de salud ocupacional, que
+    le generó en el curso de la atención, cumpliendo los requisitos y procedimientos de archivo conforme a las normas legales
+    vigentes para la historia clínica. En ningún caso los empleadores podán tener, conservar o anexar copia de las evaluaciones
     medicas ocupacionales y de la historia clínica ocupacional a la hoja del vida del trabajador.''', styleN)]
     dataResolucion=[]
     dataResolucion.append([resolucion])
@@ -342,7 +344,7 @@ def report(request, pk, pk_A):
     c.setLineWidth(1)
     c.rect(margenIzq-2,540, 538,165, fill=0)
 
-    
+
     c.save()
     pdf=buffer.getvalue();
     buffer.close()
@@ -352,7 +354,7 @@ def report(request, pk, pk_A):
 
 def calcularEdad(born):
     today = date.today()
-    try: 
+    try:
         birthday = born.replace(year=today.year)
     except ValueError: # raised when birth date is February 29 and the current year is not a leap year
         birthday = born.replace(year=today.year, month=born.month+1, day=1)
