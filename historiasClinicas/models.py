@@ -29,24 +29,24 @@ class Actualizacion(models.Model):
     )
 
     tipo_examen = (
-        ('preingreso','Pre-ingreso'),
-        ('periodico','Periodico'),
-        ('egreso','Egreso'),
-        ('cambio labor','Cambio labor'),
-        ('reincorporacion','Reincorporacion laboral'),
-        ('rev paraclinicos','Rev. Paraclinicos'),
-        ('manipulacion de alimentos','Manipulacion de alimentos'),
+        ('Pre-ingreso','Pre-ingreso'),
+        ('Periodico','Periodico'),
+        ('Egreso','Egreso'),
+        ('Cambio labor','Cambio labor'),
+        ('Reincorporacion laboral','Reincorporacion laboral'),
+        ('Rev. Paraclinicos','Rev. Paraclinicos'),
+        ('Manipulacion de alimentos','Manipulacion de alimentos'),
     )
 
     conceptos_valoracion_medica = (
-        ('apto sin patologia','Apto para desempeñar el cargo sin patologia aparente'),
-        ('apto con patologia','Apto para desempañar el cargo con patologia que no limita la labor'),
-        ('apto con restricciones','Apto con restricciones o adaptaciones para la labor'),
-        ('aplazado','Aplazado'),
-        ('apto alturas','Apto para labor el alturas'),
-        ('apto continuacion labor','Apto para continuar desempeñando su labor'),
-        ('examen de retiro','Examen de retiro'),
-        ('apto para manipulación de alimentos','Apto para manipulación de alimentos'),
+        ('Apto para desempeñar el cargo sin patologia aparente','Apto para desempeñar el cargo sin patologia aparente'),
+        ('Apto para desempañar el cargo con patologia que no limita la labor','Apto para desempañar el cargo con patologia que no limita la labor'),
+        ('Apto con restricciones o adaptaciones para la labor','Apto con restricciones o adaptaciones para la labor'),
+        ('Aplazado','Aplazado'),
+        ('Apto para labor el alturas','Apto para labor el alturas'),
+        ('Apto para continuar desempeñando su labor','Apto para continuar desempeñando su labor'),
+        ('Examen de retiro','Examen de retiro'),
+        ('Apto para manipulación de alimentos','Apto para manipulación de alimentos'),
     )
 
     restr_laborales = (

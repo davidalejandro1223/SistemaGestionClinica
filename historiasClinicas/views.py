@@ -129,8 +129,8 @@ def report(request, pk, pk_A):
 
     #HEADER
     c.setLineWidth(.3)
-    c.setFont('Helvetica-Bold', 14)
-    c.drawString(margenIzq+177,780, 'CONSULTORIOS MÉDICOS HERMANOS RODRÍGUEZ')
+    c.setFont('Helvetica-Bold', 18)
+    c.drawString(margenIzq+260,780, 'Consultorios médicos HR salud')
     c.setFont('Helvetica', 11)
     c.drawString(margenIzq+285,768, 'Consultorios ocupacionales y de medicina general.')
     c.drawString(margenIzq+324,756, 'Calle 4 #4 -97  Facatativá (Cundinamarca).')
@@ -150,8 +150,8 @@ def report(request, pk, pk_A):
 
     #LOGOTIPO
 
-    logo=os.path.join(os.path.dirname(os.path.abspath(__file__)), './Imagenes/logo.png')
-    c.drawImage(logo,margenIzq,750,width=109, height=47)
+    logo=os.path.join(os.path.dirname(os.path.abspath(__file__)), './Imagenes/logou.jpg')
+    c.drawImage(logo,margenIzq,740,width=185, height=85)
 
 
 
@@ -208,7 +208,7 @@ def report(request, pk, pk_A):
 
 
     high = 480
-    cadena=[Paragraph('''Examen medico ocupacional básico.''', styleN)]
+    cadena=[Paragraph(actualizacion.examen_actual, styleN)]
     dataTabla.append(cadena)
 
     width, height = A4
