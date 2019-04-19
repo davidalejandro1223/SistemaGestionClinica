@@ -39,9 +39,9 @@ class Actualizacion(models.Model):
     )
 
     conceptos_valoracion_medica = (
-        ('Apto para desempeñar el cargo sin patologia aparente','Apto para desempeñar el cargo sin patologia aparente'),
-        ('Apto para desempañar el cargo con patologia que no limita la labor','Apto para desempañar el cargo con patologia que no limita la labor'),
-        ('Apto con restricciones o adaptaciones para la labor','Apto con restricciones o adaptaciones para la labor'),
+        ('Apto para desempeñar cargo, sin patologia aparente','Apto para desempeñar el cargo sin patologia aparente'),
+        ('Apto para cargo, con patologia que no limita labor','Apto para desempañar el cargo con patologia que no limita la labor'),
+        ('Apto con restricciones o adaptaciones para labor','Apto con restricciones o adaptaciones para la labor'),
         ('Aplazado','Aplazado'),
         ('Apto para labor el alturas','Apto para labor el alturas'),
         ('Apto para continuar desempeñando su labor','Apto para continuar desempeñando su labor'),
