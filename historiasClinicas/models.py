@@ -119,7 +119,7 @@ class Actualizacion(models.Model):
 
     #   Concepto de valoracion medica
     valoracion_medica= models.CharField(
-        max_length=50,
+        max_length=100,
         choices=conceptos_valoracion_medica,
         verbose_name='Concepto de valoracion medica',
     )
